@@ -1,12 +1,18 @@
 export interface MetricEvent { name: string; value: number; timestamp: string; dimensions?: Record<string, string> }
 export interface MetricSummary { name: string; count: number; sum: number; min: number; max: number; average: number }
 const NAME = /^[A-Za-z0-9._-]{1,96}$/;
+const OFFSET_TIMESTAMP = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,9})?(?:Z|[+-]\d{2}:\d{2})$/;
+
+function compareCodePoints(left: string, right: string): number {
+  if (left === right) return 0;
+  return left < right ? -1 : 1;
+}
 
 function validate(event: MetricEvent): MetricEvent {
   const name = event.name.trim();
   if (!NAME.test(name)) throw new Error("invalid metric name");
   if (!Number.isFinite(event.value)) throw new Error("invalid metric value");
-  if (Number.isNaN(Date.parse(event.timestamp))) throw new Error("invalid timestamp");
+  if (!OFFSET_TIMESTAMP.test(event.timestamp) || Number.isNaN(Date.parse(event.timestamp))) throw new Error("invalid timestamp");
   const dimensions = event.dimensions ?? {};
   if (Object.keys(dimensions).length > 32) throw new Error("dimension limit exceeded");
   for (const [key, value] of Object.entries(dimensions)) {
@@ -24,7 +30,7 @@ export function aggregate(events: readonly MetricEvent[]): MetricSummary[] {
     values.push(checked.value);
     groups.set(checked.name, values);
   }
-  return [...groups.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([name, values]) => {
+  return [...groups.entries()].sort(([a], [b]) => compareCodePoints(a, b)).map(([name, values]) => {
     const sum = values.reduce((total, value) => total + value, 0);
     if (!Number.isFinite(sum)) throw new Error("aggregate overflow");
     return { name, count: values.length, sum, min: Math.min(...values), max: Math.max(...values), average: sum / values.length };
