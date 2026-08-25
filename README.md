@@ -1,44 +1,14 @@
-<!-- PORTFOLIO PROJECT PROFILE: maintained by the repository owner -->
+# SkyAnalytics Core
 
-## Project profile and code-audit snapshot
+**Status: engineering beta / major-application domain core.**
 
-**What this is:** **Sky-SkyAnalytics** is a public repository described as: “Repository for the SkyAnalytics component of the Sky ecosystem.” Its dominant language signals are **No dominant programming-language extension was detected in the sampled repository tree.**.
+SkyAnalytics Core validates and aggregates caller-supplied metric events. It provides bounded metric names/values/timestamps/dimensions, deterministic count/sum/min/max/average summaries, and caller-supplied time-range metadata.
 
-**Why it has value:** Its value is best understood through the implementation evidence currently present in the repository: **6 tracked files** were observed in the shallow audit, with the source structure and existing documentation providing the project’s specific context. This README does not treat a prototype, experiment, or archive as a production system without supporting evidence.
+It does **not** collect telemetry, track users, operate an ingestion pipeline, query a database, stream events, provide dashboards, infer causality, authenticate data sources, prove metric accuracy, or claim production observability. Aggregated values are only as trustworthy as the supplied events.
 
-**Implementation evidence:** No test-related file was detected by filename heuristics.; No dependency manifest was detected.; No CI, build, Docker, or infrastructure signal was detected by the audit.; and 4 documentation or governance file(s) detected. Test filenames observed include none detected. Dependency or package files include none detected. Build, CI, or infrastructure signals include none detected.
+```bash
+npm install --ignore-scripts
+npm run check
+```
 
-**Current status:** The repository is tracked on the `main` branch. The existing source tree, configuration, tests, workflows, and documentation remain authoritative for supported behavior and maturity. A code audit is not a production-readiness certification, and the presence of a test or workflow file does not establish that all checks pass.
-
-**Relationship to the wider portfolio:** This repository is one focused component of the broader Skyler Blue Spillers portfolio across AI, software engineering, cloud and DevOps, cybersecurity, blockchain, finance, education, social systems, and creative work. It may provide a service boundary, implementation pattern, experiment, archive, or reusable idea for related repositories. Treat repositories as technical dependencies only where documented interfaces and verified project requirements support that relationship.
-
-**Quality and security note:** No obvious secret-like pattern was detected by the limited static scan; this is not a substitute for a security audit. No TODO/FIXME marker was detected in the scanned text files.
-
----
-
-# Sky Skyanalytics
-
-![GitHub stars](https://img.shields.io/github/stars/skylerblue333/Sky-SkyAnalytics?style=flat-square)
-![GitHub license](https://img.shields.io/github/license/skylerblue333/Sky-SkyAnalytics?style=flat-square)
-
-## 🌟 Overview
-**Sky-SkyAnalytics** is a professional-grade project within the **SkyCoin4444** ecosystem. It focuses on delivering high-value solutions in the domain of **Software Development**.
-
-## 🚀 Key Features
-- **Scalable Architecture**: Designed for enterprise-level growth and performance.
-- **Modern Standards**: Implements best practices for clean code and maintainability.
-- **Robust Integration**: Built to work seamlessly within modern cloud-native environments.
-
-## 🛠️ Technology Stack
-- **Primary Domain**: Software Development
-- **Ecosystem**: SkyCoin4444 Digital Platform
-
-## 📂 Structure
-The project is organized into a modular structure to ensure clarity and ease of development.
-
-## 👨‍💻 Author
-**Skyler Blue Spillers**
-*Professional Chess Player & Software Engineer*
-
----
-*Powered by SkyCoin4444*
+A future SKYCOIN4444 adapter may feed verified application events into this domain core. Collection consent/privacy, provenance, persistence, retention, access control, observability infrastructure, and deployment remain responsibilities of the consuming system.
